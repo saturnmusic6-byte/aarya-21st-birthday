@@ -58,29 +58,30 @@ body{background:var(--black);color:var(--tp);font-family:var(--sans);line-height
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Ultra-soft edge fade */
+  mask-image: radial-gradient(circle at center, black 0%, rgba(0,0,0,0.8) 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(circle at center, black 0%, rgba(0,0,0,0.8) 20%, transparent 75%);
 }
 .noir-memory-photo {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* High-Impact Noir Gold Filter */
-  filter: grayscale(1) sepia(0.8) contrast(1.6) brightness(1.2) saturate(1.2);
+  /* Natural & Bright Filter - No more 'Ghost' look */
+  filter: brightness(1.2) contrast(1.05) saturate(1.1);
   animation: photoBreath 8s infinite ease-in-out;
 }
-.smudge-overlay {
-  position: absolute;
-  inset: -2px; /* Slight overlap to ensure total edge coverage */
-  /* Bulletproof smudge: forces edges to black */
-  background: radial-gradient(circle at center, transparent 15%, rgba(8,8,8,0.4) 40%, rgba(8,8,8,0.8) 65%, var(--black) 85%);
-  z-index: 2;
-  pointer-events: none;
-}
 @keyframes photoBreath {
-  0%, 100% { opacity: 0.7; transform: scale(1.05); }
+  0%, 100% { opacity: 0.7; transform: scale(1.04); }
   50% { opacity: 0.95; transform: scale(1); }
 }
 @media(max-width: 1024px) {
-  .hero-media-zone { width: 400px; height: 550px; right: -50px; }
+  .hero-media-zone { 
+    width: 400px; 
+    height: 550px; 
+    right: -50px; 
+    mask-image: radial-gradient(circle at center, black 10%, transparent 85%);
+    -webkit-mask-image: radial-gradient(circle at center, black 10%, transparent 85%);
+  }
 }
 @media(max-width: 768px) {
   .hero-media-zone { display: none; }
