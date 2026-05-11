@@ -93,23 +93,7 @@ body{background:var(--black);color:var(--tp);font-family:var(--sans);line-height
   }
 }
 @media(max-width: 768px) {
-  .hero-media-zone { 
-    display: block !important; /* Force visibility */
-    width: 280px; 
-    height: 400px; 
-    top: 45%;
-    left: 50%;
-    right: auto;
-    transform: translate(-50%, -50%);
-    opacity: 0.3 !important; /* Visible but subtle backdrop */
-    z-index: 0; /* Deep background */
-    mask-image: none !important;
-    -webkit-mask-image: none !important;
-  }
-  .hero-content {
-    z-index: 10;
-    position: relative;
-  }
+  .hero-media-zone { display: none; }
 }
 .hero-content{position:relative;z-index:2;max-width:800px;animation:heroIn 1.2s cubic-bezier(.4,0,.2,1) both}
 @keyframes heroIn{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
