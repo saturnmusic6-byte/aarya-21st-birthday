@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy 21st Birthday, Aarya ✦</title>
+  <meta name="description" content="A birthday experience crafted with love. From Yash, for Aarya — 21st Birthday." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=1.1" />
+</head>
+<body>
+
+  <!-- Floating Petals -->
+  <div id="petals" aria-hidden="true"></div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="nav-brand brand-animate">✦ Aarya's 21st</div>
+    <div class="nav-links">
+      <a href="#gallery-section">Gallery</a>
+      <a href="#upload-section">Add Memory</a>
+      <button class="nav-private-btn" id="nav-unlock-btn">FOR AARYA <span class="shining-lock">🔒</span></button>
+    </div>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">☰</button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#gallery-section" class="mobile-link">Gallery</a>
+    <a href="#upload-section" class="mobile-link">Add Memory</a>
+    <button class="mobile-private-btn" id="mobile-unlock-btn">FOR AARYA <span class="shining-lock">🔒</span></button>
+  </div>
+
+  <!-- ===================== PUBLIC ZONE ===================== -->
+  <main id="public-zone">
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <div class="hero-ring hero-ring-1"></div>
+      <div class="hero-ring hero-ring-2"></div>
+      <div class="hero-ring hero-ring-3"></div>
+      <div class="hero-image-accent"></div>
+      <div class="hero-content">
+        <p class="hero-pre">21st Birthday ✦ 2026</p>
+        <h1 class="hero-title">Happy Birthday,<br /><span class="gold-text italic name-glow">Aarya</span></h1>
+        <p class="hero-sub">If I could hold time still, it would look a little like this —<br>adorable, real, and full of you.</p>
+        <p class="hero-from">— Yash</p>
+        <div class="hero-actions">
+          <a href="#upload-section" class="btn-primary">Add a Memory ↓</a>
+          <a href="#gallery-section" class="btn-outline">View Gallery</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- UPLOAD SECTION -->
+    <section class="section upload-section" id="upload-section">
+      <div class="section-header">
+        <span class="section-tag">Shared Memories</span>
+        <h2>Capture the Moment</h2>
+        <p>Upload photos & videos — they'll instantly appear in the shared gallery for everyone at the celebration.</p>
+      </div>
+
+      <div class="upload-zone" id="upload-zone" role="button" tabindex="0" aria-label="Upload files">
+        <span class="upload-icon">✦</span>
+        <p class="upload-main-text">Add something she’ll smile at later</p>
+        <p class="upload-sub-text">tap to browse your gallery</p>
+        <input type="file" id="file-input" accept="image/*,video/*" multiple hidden />
+        <button class="btn-primary upload-trigger-btn" id="upload-trigger">Choose Files</button>
+      </div>
+
+      <!-- Upload Progress Queue -->
+      <div class="upload-queue" id="upload-queue"></div>
+
+      <!-- Firebase Status Banner -->
+      <div class="firebase-banner" id="firebase-banner">
+        <span id="firebase-banner-text">⚙ Connecting to cloud…</span>
+      </div>
+    </section>
+
+    <!-- GALLERY SECTION -->
+    <section class="section gallery-section" id="gallery-section">
+      <div class="section-header">
+        <span class="section-tag">Live Gallery</span>
+        <h2>Moments from the Night</h2>
+        <p>Every memory, live and shared across all devices in real time.</p>
+      </div>
+
+      <div class="gallery-filters" id="gallery-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="image">Photos</button>
+        <button class="filter-btn" data-filter="video">Videos</button>
+      </div>
+
+      <div class="gallery-grid" id="gallery-grid">
+        <div class="gallery-empty" id="gallery-empty">
+          <p class="gallery-empty-icon">✦</p>
+          <p>No memories yet — be the first to upload!</p>
+        </div>
+      </div>
+
+      <div class="gallery-loader" id="gallery-loader" style="display:none">
+        <div class="spinner"></div>
+      </div>
+    </section>
+
+    <!-- QR CODE SECTION -->
+    <section class="section qr-section" id="qr-section">
+      <div class="qr-card">
+        <span class="section-tag">Share</span>
+        <h3>Let Everyone Join</h3>
+        <p>Friends can scan this QR code to open the gallery and upload their photos from the birthday party.</p>
+        <div class="qr-wrapper" id="qr-code-container"></div>
+        <p class="qr-url" id="current-url"></p>
+        <button class="btn-outline" id="download-qr">↓ Download QR Code</button>
+      </div>
+    </section>
+
+    <!-- PRIVATE UNLOCK TEASER -->
+    <section class="section unlock-teaser-section">
+      <div class="unlock-teaser-card">
+        <div class="lock-glow">✦</div>
+        <h3>A Private Message Awaits</h3>
+        <p>There's something here just for you, Aarya — a space only you can open.</p>
+        <button class="btn-primary" id="unlock-btn">Unlock Private Space</button>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>Made with ♡ by Yash &nbsp;·&nbsp; Aarya's 21st Birthday</p>
+    </footer>
+
+  </main>
+
+  <!-- ===================== PASSWORD MODAL ===================== -->
+  <div class="modal-overlay" id="password-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" style="display:none">
+    <div class="modal-card">
+      <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
+      <div class="modal-heart">♡</div>
+      <h3 class="modal-title" id="modal-title">Just for You, Aarya</h3>
+      <p class="modal-sub">Enter the password to unlock your private space</p>
+      <div class="input-group">
+        <input type="password" id="password-input" placeholder="Enter password…" autocomplete="off" aria-label="Password" />
+        <button class="btn-primary" id="submit-password">Unlock ✦</button>
+      </div>
+      <p class="password-error" id="password-error" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <!-- ===================== PRIVATE ZONE (injected after unlock) ===================== -->
+  <div id="private-zone" style="display:none" aria-hidden="true"></div>
+
+  <!-- ===================== LIGHTBOX ===================== -->
+  <div class="lightbox" id="lightbox" style="display:none" role="dialog" aria-modal="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">✕</button>
+    <button class="lightbox-prev" id="lightbox-prev" aria-label="Previous">‹</button>
+    <button class="lightbox-next" id="lightbox-next" aria-label="Next">›</button>
+    <div class="lightbox-media-wrapper" id="lightbox-media"></div>
+    <div class="lightbox-bar">
+      <span class="lightbox-counter" id="lightbox-counter"></span>
+      <button class="lightbox-download-btn" id="lightbox-download">↓ Download</button>
+    </div>
+  </div>
+
+  <!-- QR Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <!-- Firebase v9 compat -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+  <!-- App Scripts -->
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
