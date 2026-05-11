@@ -476,9 +476,24 @@
     if (!privateAudio) {
       privateAudio = new Audio("https://res.cloudinary.com/dwoau4g1j/video/upload/v1778445472/f09ndqtk8zphy6b2vuuo.mp3");
       privateAudio.loop = true;
-      privateAudio.volume = 0.5; // lower the volume
+      privateAudio.volume = 0.5;
     }
-    privateAudio.play().catch(err => console.log("Audio auto-play prevented:", err));
+    
+    // Explicitly play on user interaction to bypass browser restrictions
+    const playPromise = privateAudio.play();
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        console.log("Audio playing successfully");
+      }).catch(err => {
+        console.log("Audio play failed, retrying on next interaction:", err);
+        // Fallback: try to play again if it fails
+        const retryPlay = () => {
+          privateAudio.play();
+          window.removeEventListener('click', retryPlay);
+        };
+        window.addEventListener('click', retryPlay);
+      });
+    }
   }
 
   function lockPrivateZone() {
@@ -708,6 +723,12 @@
     bindEvents();
     generateQR();
     initFirebase();
+
+    // Set hero video speed
+    const heroVideo = document.getElementById("hero-video");
+    if (heroVideo) {
+      heroVideo.playbackRate = 0.75; // Slow down the video for a romantic effect
+    }
 
     // Restore session if already unlocked
     if (sessionStorage.getItem("private_unlocked") === "1") {
