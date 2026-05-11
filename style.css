@@ -52,40 +52,44 @@ body{background:var(--black);color:var(--tp);font-family:var(--sans);line-height
   top: 55%;
   right: 5%;
   transform: translateY(-50%);
-  width: 600px;
-  height: 800px;
-  z-index: 100;
+  width: 500px;
+  height: 700px;
+  z-index: 1; /* Behind text (z-index 2) */
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  border-radius: 50%; /* Circular shape */
+  /* Aggressive mask to hide corners */
+  mask-image: radial-gradient(circle at center, white 20%, rgba(255,255,255,0.7) 45%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at center, white 20%, rgba(255,255,255,0.7) 45%, transparent 80%);
 }
 .noir-memory-photo {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.8;
-  /* Minimal & Soft Noir Filter */
-  filter: brightness(1.1) contrast(1.05) sepia(0.15) saturate(1.05);
-  animation: softPresence 8s infinite ease-in-out;
+  opacity: 0.6;
+  filter: brightness(1.1) contrast(1.05) sepia(0.12);
+  animation: subtleBreath 8s infinite ease-in-out;
 }
 .hero-vignette {
   position: absolute;
   inset: 0;
-  z-index: 101;
-  /* Very broad soft vignette */
-  background: radial-gradient(circle at center, transparent 15%, rgba(8,8,8,0.4) 45%, var(--black) 85%);
+  z-index: 2;
+  /* Deep circular vignette overlay */
+  background: radial-gradient(circle at center, transparent 10%, rgba(8,8,8,0.4) 40%, var(--black) 85%);
   pointer-events: none;
 }
-@keyframes softPresence {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 0.9; }
+@keyframes subtleBreath {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.7; }
 }
 @media(max-width: 1024px) {
   .hero-media-zone { 
-    width: 400px; 
+    width: 380px; 
     height: 550px; 
-    right: -50px; 
+    right: -40px; 
+    opacity: 0.4;
   }
 }
 @media(max-width: 768px) {
