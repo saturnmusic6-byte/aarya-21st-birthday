@@ -54,22 +54,26 @@ body{background:var(--black);color:var(--tp);font-family:var(--sans);line-height
   transform: translateY(-50%);
   width: 600px;
   height: 800px;
-  z-index: 1;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Soft broad vignette: ensures visibility in center, fades at edges */
-  mask-image: radial-gradient(circle at center, white 30%, rgba(255,255,255,0.8) 50%, transparent 90%);
-  -webkit-mask-image: radial-gradient(circle at center, white 30%, rgba(255,255,255,0.8) 50%, transparent 90%);
+  overflow: hidden;
 }
 .noir-memory-photo {
   width: 100%;
   height: 100%;
   object-fit: cover;
   opacity: 1;
-  /* Minimal Noir Filter: Vibrant and Sweet */
-  filter: brightness(1.15) contrast(1.1) sepia(0.15) saturate(1.1);
+  filter: brightness(1.15) contrast(1.1) saturate(1.1);
   animation: photoBreath 8s infinite ease-in-out;
+}
+.hero-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 101;
+  background: radial-gradient(circle at center, transparent 20%, rgba(8,8,8,0.5) 50%, var(--black) 90%);
+  pointer-events: none;
 }
 @keyframes photoBreath {
   0%, 100% { opacity: 0.8; transform: scale(1.03); }
@@ -80,8 +84,6 @@ body{background:var(--black);color:var(--tp);font-family:var(--sans);line-height
     width: 400px; 
     height: 550px; 
     right: -50px; 
-    mask-image: radial-gradient(circle at center, white 20%, transparent 90%);
-    -webkit-mask-image: radial-gradient(circle at center, white 20%, transparent 90%);
   }
 }
 @media(max-width: 768px) {
