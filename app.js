@@ -122,6 +122,7 @@
   let lightboxIndex = 0;
   let lightboxItems = [];
   let privateAudio = null;
+  const AUDIO_URL = "https://res.cloudinary.com/dwoau4g1j/video/upload/v1778445472/f09ndqtk8zphy6b2vuuo.mp3";
 
   /* ═══════════════════════════════════════════════
      INIT FIREBASE
@@ -472,26 +473,27 @@
     const closeBtn = document.getElementById("private-close-btn");
     if (closeBtn) closeBtn.addEventListener("click", lockPrivateZone);
 
-    // Play music
+    // Play music — strictly for Private Space
     if (!privateAudio) {
-      privateAudio = new Audio("https://res.cloudinary.com/dwoau4g1j/video/upload/v1778445472/f09ndqtk8zphy6b2vuuo.mp3");
+      privateAudio = new Audio(AUDIO_URL);
       privateAudio.loop = true;
       privateAudio.volume = 0.5;
     }
     
-    // Explicitly play on user interaction to bypass browser restrictions
+    // Ensure it starts from the beginning and plays
+    privateAudio.currentTime = 0;
     const playPromise = privateAudio.play();
+    
     if (playPromise !== undefined) {
       playPromise.then(() => {
-        console.log("Audio playing successfully");
+        console.log("Private music started");
       }).catch(err => {
-        console.log("Audio play failed, retrying on next interaction:", err);
-        // Fallback: try to play again if it fails
-        const retryPlay = () => {
+        console.log("Autoplay prevented, will play on first click inside private zone", err);
+        const playOnFirstClick = () => {
           privateAudio.play();
-          window.removeEventListener('click', retryPlay);
+          window.removeEventListener('click', playOnFirstClick);
         };
-        window.addEventListener('click', retryPlay);
+        window.addEventListener('click', playOnFirstClick);
       });
     }
   }
