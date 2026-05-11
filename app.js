@@ -102,7 +102,7 @@
             <p class="memory-date">Tonight</p>
             <h3 class="memory-title">Your 21st — The One We'll Talk About</h3>
             <p class="memory-desc">
-              Whatever this night turns into, I already know it'll be a happy memory, because <span class="name-glow">you're in it</span>. Happy Birthday baby, Love you so much.
+              Whatever this night turns into, I already know it'll be a happy memory, because <span class="static-glow">you're in it</span>. Happy Birthday baby, Love you so much.
             </p>
           </div>
         </div>
