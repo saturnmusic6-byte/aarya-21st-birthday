@@ -47,45 +47,43 @@ body{background:var(--black);color:var(--tp);font-family:var(--sans);line-height
 /* ── HERO ── */
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px 20px 80px;overflow:hidden}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(201,169,110,.08) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 80%,rgba(212,132,156,.06) 0%,transparent 50%)}
-.hero-video-zone {
+.hero-media-zone {
   position: absolute;
   top: 55%;
   right: 5%;
   transform: translateY(-50%);
-  width: 550px;
-  height: 750px;
+  width: 600px;
+  height: 800px;
   z-index: 1;
-  overflow: hidden;
-  /* Deep, dreamy smudge mask */
-  mask-image: radial-gradient(circle at center, black 0%, rgba(0,0,0,0.8) 30%, transparent 95%);
-  -webkit-mask-image: radial-gradient(circle at center, black 0%, rgba(0,0,0,0.8) 30%, transparent 95%);
-  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.hero-video-zone img {
+.noir-memory-photo {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.9;
-  /* Cinematic Golden Noir Memory Filter */
-  filter: sepia(0.4) contrast(1.2) brightness(1.25) saturate(1.1) drop-shadow(0 0 15px rgba(201,169,110,0.2));
-  animation: memoryBreath 10s infinite ease-in-out;
+  /* High-Impact Noir Gold Filter */
+  filter: grayscale(1) sepia(0.8) contrast(1.6) brightness(1.2) saturate(1.2);
+  animation: photoBreath 8s infinite ease-in-out;
 }
-
-@keyframes memoryBreath {
-  0%, 100% { opacity: 0.7; transform: scale(1.05); filter: sepia(0.4) contrast(1.2) brightness(1.1) blur(1px); }
-  50% { opacity: 0.95; transform: scale(1); filter: sepia(0.4) contrast(1.2) brightness(1.25) blur(0px); }
+.smudge-overlay {
+  position: absolute;
+  inset: -2px; /* Slight overlap to ensure total edge coverage */
+  /* Bulletproof smudge: forces edges to black */
+  background: radial-gradient(circle at center, transparent 15%, rgba(8,8,8,0.4) 40%, rgba(8,8,8,0.8) 65%, var(--black) 85%);
+  z-index: 2;
+  pointer-events: none;
 }
-
+@keyframes photoBreath {
+  0%, 100% { opacity: 0.7; transform: scale(1.05); }
+  50% { opacity: 0.95; transform: scale(1); }
+}
 @media(max-width: 1024px) {
-  .hero-video-zone {
-    width: 380px;
-    height: 550px;
-    right: -20px;
-    opacity: 0.6;
-  }
+  .hero-media-zone { width: 400px; height: 550px; right: -50px; }
 }
 @media(max-width: 768px) {
-  .hero-video-zone { display: none; }
+  .hero-media-zone { display: none; }
 }
 .hero-content{position:relative;z-index:2;max-width:800px;animation:heroIn 1.2s cubic-bezier(.4,0,.2,1) both}
 @keyframes heroIn{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
