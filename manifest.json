@@ -1,0 +1,17 @@
+{
+  "name": "Aarya's 21st",
+  "short_name": "Aarya",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "description": "A luxury 21st birthday experience for Aarya.",
+  "icons": [
+    {
+      "src": "bb21.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}
