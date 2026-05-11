@@ -47,55 +47,50 @@ body{background:var(--black);color:var(--tp);font-family:var(--sans);line-height
 /* ── HERO ── */
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px 20px 80px;overflow:hidden}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(201,169,110,.08) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 80%,rgba(212,132,156,.06) 0%,transparent 50%)}
-.hero-media-frame {
+.hero-slideshow {
   position: absolute;
   top: 50%;
-  right: 8%;
+  right: 5%;
   transform: translateY(-50%);
-  width: 380px;
-  height: 520px;
+  width: 500px;
+  height: 700px;
   z-index: 1;
-  border-radius: 4px;
-  padding: 12px;
-  background: var(--dark2);
-  border: 1px solid var(--border-s);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
   overflow: hidden;
+  mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+  pointer-events: none;
 }
-.hero-media-frame::after {
-  content: '';
+.hero-slideshow img {
   position: absolute;
   inset: 0;
-  background: 
-    linear-gradient(45deg, rgba(201,169,110,0.1), transparent),
-    url('https://www.transparenttextures.com/patterns/paper.png');
-  pointer-events: none;
-  opacity: 0.3;
-  z-index: 3;
-}
-.hero-media-frame video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  filter: grayscale(1) contrast(1.6) brightness(1.2) sepia(0.1);
-  animation: sketchBreathing 8s infinite ease-in-out;
-  mix-blend-mode: screen;
+  filter: grayscale(1) contrast(1.6) brightness(1.2) sepia(0.2);
+  animation: slideFade 16s infinite ease-in-out;
 }
-@keyframes sketchBreathing {
-  0%, 100% { opacity: 0.5; transform: scale(1.05); }
-  50% { opacity: 0.85; transform: scale(1); }
+.hero-slideshow img:nth-child(1) { animation-delay: 0s; }
+.hero-slideshow img:nth-child(2) { animation-delay: 4s; }
+.hero-slideshow img:nth-child(3) { animation-delay: 8s; }
+.hero-slideshow img:nth-child(4) { animation-delay: 12s; }
+
+@keyframes slideFade {
+  0%, 100% { opacity: 0; transform: scale(1.1); }
+  5%, 25% { opacity: 0.75; transform: scale(1); }
+  30%, 95% { opacity: 0; transform: scale(1.05); }
 }
+
 @media(max-width: 1024px) {
-  .hero-media-frame {
-    width: 260px;
-    height: 360px;
-    right: 5%;
-    opacity: 0.4;
+  .hero-slideshow {
+    width: 350px;
+    height: 500px;
+    right: -50px;
+    opacity: 0.5;
   }
 }
 @media(max-width: 768px) {
-  .hero-media-frame { display: none; } /* Hide on mobile to keep it clean */
+  .hero-slideshow { display: none; }
 }
 .hero-content{position:relative;z-index:2;max-width:800px;animation:heroIn 1.2s cubic-bezier(.4,0,.2,1) both}
 @keyframes heroIn{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
