@@ -308,14 +308,13 @@
     el.dataset.index = idx;
 
     if (item.type === "video") {
-      const vid = document.createElement("video");
-      vid.src = item.url;
-      vid.muted = true;
-      vid.playsInline = true;
-      vid.preload = "metadata";
-      vid.addEventListener("mouseenter", () => vid.play().catch(() => { }));
-      vid.addEventListener("mouseleave", () => { vid.pause(); vid.currentTime = 0; });
-      el.appendChild(vid);
+      // Optimized Cloudinary Thumbnail: switch extension to .jpg and use auto-capture
+      const thumbUrl = item.url.replace(/\.[^/.]+$/, ".jpg");
+      const img = document.createElement("img");
+      img.src = thumbUrl;
+      img.alt = item.name || "Memory Video";
+      img.loading = "lazy";
+      el.appendChild(img);
       el.insertAdjacentHTML("beforeend", `<span class="video-badge">▶ Video</span>`);
     } else {
       const img = document.createElement("img");
