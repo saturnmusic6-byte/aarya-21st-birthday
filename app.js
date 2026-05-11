@@ -726,12 +726,6 @@
     generateQR();
     initFirebase();
 
-    // Set hero video speed (framed version)
-    const heroVideo = document.getElementById("hero-video");
-    if (heroVideo) {
-      heroVideo.playbackRate = 0.65; // Even slower for that artistic vintage feel
-    }
-
     // Restore session if already unlocked
     if (sessionStorage.getItem("private_unlocked") === "1") {
       unlockPrivateZone();
