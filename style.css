@@ -56,9 +56,9 @@ body{background:var(--black);color:var(--tp);font-family:var(--sans);line-height
   height: 750px;
   z-index: 1;
   overflow: hidden;
-  /* Soft smudge mask */
-  mask-image: radial-gradient(circle at center, black 0%, rgba(0,0,0,0.9) 35%, transparent 90%);
-  -webkit-mask-image: radial-gradient(circle at center, black 0%, rgba(0,0,0,0.9) 35%, transparent 90%);
+  /* Deep, dreamy smudge mask */
+  mask-image: radial-gradient(circle at center, black 0%, rgba(0,0,0,0.8) 30%, transparent 95%);
+  -webkit-mask-image: radial-gradient(circle at center, black 0%, rgba(0,0,0,0.8) 30%, transparent 95%);
   pointer-events: none;
 }
 .hero-video-zone img {
@@ -66,14 +66,14 @@ body{background:var(--black);color:var(--tp);font-family:var(--sans);line-height
   height: 100%;
   object-fit: cover;
   opacity: 0.9;
-  /* Bright & Clear Filter */
-  filter: brightness(1.4) contrast(1.05) sepia(0.2) saturate(1.1);
-  animation: photoPresence 8s infinite ease-in-out;
+  /* Cinematic Golden Noir Memory Filter */
+  filter: sepia(0.4) contrast(1.2) brightness(1.25) saturate(1.1) drop-shadow(0 0 15px rgba(201,169,110,0.2));
+  animation: memoryBreath 10s infinite ease-in-out;
 }
 
-@keyframes photoPresence {
-  0%, 100% { opacity: 0.7; transform: scale(1.03); }
-  50% { opacity: 0.95; transform: scale(1); }
+@keyframes memoryBreath {
+  0%, 100% { opacity: 0.7; transform: scale(1.05); filter: sepia(0.4) contrast(1.2) brightness(1.1) blur(1px); }
+  50% { opacity: 0.95; transform: scale(1); filter: sepia(0.4) contrast(1.2) brightness(1.25) blur(0px); }
 }
 
 @media(max-width: 1024px) {
