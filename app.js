@@ -30,16 +30,16 @@
             Twenty-one is here. Never in my life did I think that this sweet girl I met randomly would be such a blessing to me, and that I’d be blessed to be part of this chapter of her life, truly. When I first met you, my heart told me instantly, <span class="shimmer-text">she’s the one you’d break mountains for</span>, and I quickly agreed too. I still do.
           </p>
           <p>
-            I’m sure God felt like he truly is God when he brought you in this world. Not to make it dramatic, but you’re really special, as I always say, <span class="shimmer-text">those eyes, that smile, that voice, that mind, your personality</span>, and even just your existence, it all makes everything so much better. The way I get happy around you… even weed gets jealous, for real.
+            I’m sure God felt like he truly is God when he brought you in this world. Not to make it dramatic, but you’re really special, as I always say, <span class="shimmer-text">those eyes, that smile, the little scrunch on your nose when you smile, that voice, things you share, that mind, your personality, the way you carry yourself</span> and even just your existence, it all makes everything so much better.   The happiness you bring is so real, even weed would get jealous, for real.
           </p>
           <p>
-            Every memory with you gets added to the favourite category in my heart, just like every picture and video of you in my gallery. These stay with me always. <span class="shimmer-text">I find myself thinking about them pretty much every day, always.</span>
+            Every memory with you gets added to the favourite category in my heart, just like every picture and video of yours in my gallery. These stay with me always. <span class="shimmer-text">I find myself thinking about them pretty much every day, always.</span>
           </p>
           <p>
             You’ve made me want to be more thoughtful, more present, hardworking, and honest. You influence my growth really well, and I’m truly thankful for that. I am a better person because of you. I want to do all the right things and more for you. <span class="shimmer-text">I want to see us grow old and strong, somewhere really nice.</span>
           </p>
           <p>
-            I’m glad I am part of this beautiful time, your 21st Birthday. The same way I was glad to be part of your life before this, and the same way I know I’ll be glad to be in every chapter of your life after this. More than Chainsmokers, I want to be closer to you, and with time, I pray we will be.
+            I’m glad I am part of this beautiful time, your 21st Birthday. The same way I was glad to be part of your life before this, and the same way I know I’ll be glad to be in every chapter of your life after this. <span class="shimmer-text">You make things feel calmer, clearer and more meaningful. You have made life feel more beautiful, more real.</span>   More than Chainsmokers, I want to be closer to you, and with time, I pray we will be.
           </p>
           <p>
             May this year bring lots of abundance, good times, a better life, health, and everything you’ve wished for. May you reach great heights in all aspects of life. I wish nothing but pure abundance for you. Happy birthday, my sweetheart. <span class="shimmer-text">I love you. Can’t wait for June now.</span>
