@@ -120,8 +120,11 @@
   let currentFilter = "all";
   let lightboxIndex = 0;
   let lightboxItems = [];
-  let privateAudio = null;
   const AUDIO_URL = "https://res.cloudinary.com/dwoau4g1j/video/upload/v1778445472/f09ndqtk8zphy6b2vuuo.mp3";
+  let privateAudio = new Audio(AUDIO_URL);
+  privateAudio.loop = true;
+  privateAudio.volume = 0.5;
+  privateAudio.preload = "auto";
 
   /* ═══════════════════════════════════════════════
      INIT FIREBASE
@@ -308,12 +311,17 @@
     el.dataset.index = idx;
 
     if (item.type === "video") {
-      // Optimized Cloudinary Thumbnail: switch extension to .jpg and use auto-capture
-      const thumbUrl = item.url.replace(/\.[^/.]+$/, ".jpg");
+      // Optimized Cloudinary Thumbnail: switch extension to .jpg
+      const baseName = item.url.split('?')[0].replace(/\.[^/.]+$/, "");
+      const thumbUrl = baseName + ".jpg";
       const img = document.createElement("img");
       img.src = thumbUrl;
       img.alt = item.name || "Memory Video";
       img.loading = "lazy";
+      img.onerror = () => {
+         // Fallback if JPG generation fails
+         img.src = "https://via.placeholder.com/400x400/181818/c9a96e?text=Video";
+      };
       el.appendChild(img);
       el.insertAdjacentHTML("beforeend", `<span class="video-badge">▶ Video</span>`);
     } else {
@@ -387,7 +395,9 @@
 
     if (item.type === "video") {
       const vid = document.createElement("video");
-      vid.src = item.url;
+      // Force MP4 conversion via Cloudinary to ensure universal browser playback (fixes .MOV issues)
+      const safeUrl = item.url.split('?')[0].replace(/\.[^/.]+$/, ".mp4");
+      vid.src = safeUrl;
       vid.controls = true;
       vid.autoplay = true;
       vid.playsInline = true;
@@ -471,13 +481,6 @@
     const closeBtn = document.getElementById("private-close-btn");
     if (closeBtn) closeBtn.addEventListener("click", lockPrivateZone);
 
-    // Play music — strictly for Private Space
-    if (!privateAudio) {
-      privateAudio = new Audio(AUDIO_URL);
-      privateAudio.loop = true;
-      privateAudio.volume = 0.5;
-    }
-    
     // Ensure it starts from the beginning and plays
     privateAudio.currentTime = 0;
     const playPromise = privateAudio.play();
@@ -486,12 +489,14 @@
       playPromise.then(() => {
         console.log("Private music started");
       }).catch(err => {
-        console.log("Autoplay prevented, will play on first click inside private zone", err);
+        console.log("Autoplay prevented, will play on first interaction", err);
         const playOnFirstClick = () => {
           privateAudio.play();
           window.removeEventListener('click', playOnFirstClick);
+          window.removeEventListener('touchstart', playOnFirstClick);
         };
         window.addEventListener('click', playOnFirstClick);
+        window.addEventListener('touchstart', playOnFirstClick);
       });
     }
   }
