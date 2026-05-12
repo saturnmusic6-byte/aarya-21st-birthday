@@ -419,19 +419,19 @@ body{background:var(--black);color:var(--tp);font-family:var(--sans);line-height
 }
 
 .shimmer-text {
-  display: inline-block;
   color: var(--cream);
-  background: linear-gradient(120deg, var(--cream) 20%, var(--gold-l) 40%, var(--blush-l) 50%, var(--gold-l) 60%, var(--cream) 80%);
+  background: linear-gradient(120deg, var(--cream) 0%, var(--gold-l) 20%, var(--blush-l) 50%, var(--gold-l) 80%, var(--cream) 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: shimmer 4.5s linear infinite;
+  animation: shimmer 5s linear infinite;
   font-style: italic;
   font-weight: 500;
 }
 @keyframes shimmer {
-  to { background-position: 200% center; }
+  0% { background-position: -200% center; }
+  100% { background-position: 0% center; }
 }
 
 .sparkle-title {
