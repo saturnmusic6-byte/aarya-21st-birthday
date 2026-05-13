@@ -126,10 +126,13 @@
   privateAudio.volume = 0.5;
   privateAudio.preload = "auto";
 
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+  const BASE_PUBLIC_VOLUME = isMobile ? 0.02 : 0.06;
+
   const PUBLIC_AUDIO_URL = "https://res.cloudinary.com/dwoau4g1j/video/upload/v1778701931/ykmejlu0f2rwvjerc5ci.mp3";
   let publicAudio = new Audio(PUBLIC_AUDIO_URL);
   publicAudio.loop = true;
-  publicAudio.volume = 0.06; // 5x lower than 0.3
+  publicAudio.volume = BASE_PUBLIC_VOLUME;
   publicAudio.preload = "auto";
   publicAudio.load();
   let publicAudioStarted = false;
@@ -513,7 +516,7 @@
 
     // Fade back in if we're not unlocking the private zone
     if (publicAudio && publicAudioStarted && sessionStorage.getItem("private_unlocked") !== "1") {
-      fadeAudio(publicAudio, 0.06, 1500);
+      fadeAudio(publicAudio, BASE_PUBLIC_VOLUME, 1500);
     }
   }
 
@@ -597,7 +600,7 @@
 
     // Resume public music when returning to party
     if (publicAudio && publicAudioStarted) {
-      fadeAudio(publicAudio, 0.06, 2000); // Smooth fade in
+      fadeAudio(publicAudio, BASE_PUBLIC_VOLUME, 2000); // Smooth fade in
     }
   }
 
