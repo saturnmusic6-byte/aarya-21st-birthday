@@ -129,8 +129,9 @@
   const PUBLIC_AUDIO_URL = "https://res.cloudinary.com/dwoau4g1j/video/upload/v1778701931/ykmejlu0f2rwvjerc5ci.mp3";
   let publicAudio = new Audio(PUBLIC_AUDIO_URL);
   publicAudio.loop = true;
-  publicAudio.volume = 0.15; // Really minimal as requested
+  publicAudio.volume = 0.3; // Increased slightly for better audibility
   publicAudio.preload = "auto";
+  publicAudio.load();
   let publicAudioStarted = false;
 
   /* ═══════════════════════════════════════════════
