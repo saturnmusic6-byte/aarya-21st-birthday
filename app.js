@@ -129,10 +129,33 @@
   const PUBLIC_AUDIO_URL = "https://res.cloudinary.com/dwoau4g1j/video/upload/v1778701931/ykmejlu0f2rwvjerc5ci.mp3";
   let publicAudio = new Audio(PUBLIC_AUDIO_URL);
   publicAudio.loop = true;
-  publicAudio.volume = 0.3; // Increased slightly for better audibility
+  publicAudio.volume = 0.06; // 5x lower than 0.3
   publicAudio.preload = "auto";
   publicAudio.load();
   let publicAudioStarted = false;
+
+  // Utility to fade audio volume smoothly
+  function fadeAudio(audio, targetVolume, duration = 1500) {
+    if (!audio) return;
+    if (targetVolume > 0 && audio.paused) {
+      audio.play().catch(e => console.log("Fade-in play blocked", e));
+    }
+    const initialVolume = audio.volume;
+    const steps = 30;
+    const interval = duration / steps;
+    const volumeStep = (targetVolume - initialVolume) / steps;
+    let currentStep = 0;
+    const timer = setInterval(() => {
+      currentStep++;
+      let nextVol = initialVolume + (volumeStep * currentStep);
+      audio.volume = Math.max(0, Math.min(1, nextVol));
+      if (currentStep >= steps) {
+        clearInterval(timer);
+        audio.volume = targetVolume;
+        if (targetVolume === 0) audio.pause();
+      }
+    }, interval);
+  }
 
   /* ═══════════════════════════════════════════════
      INIT FIREBASE
@@ -474,6 +497,9 @@
     modal.style.display = "flex";
     document.body.style.overflow = "hidden";
     setTimeout(() => document.getElementById("password-input")?.focus(), 100);
+    
+    // Fade out public music when modal opens
+    if (publicAudio && publicAudioStarted) fadeAudio(publicAudio, 0, 1000);
   }
 
   function closePasswordModal() {
@@ -484,6 +510,11 @@
     if (err) err.textContent = "";
     const inp = document.getElementById("password-input");
     if (inp) inp.value = "";
+
+    // Fade back in if we're not unlocking the private zone
+    if (publicAudio && publicAudioStarted && sessionStorage.getItem("private_unlocked") !== "1") {
+      fadeAudio(publicAudio, 0.06, 1500);
+    }
   }
 
   function checkPassword() {
@@ -519,8 +550,11 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
     sessionStorage.setItem("private_unlocked", "1");
 
-    // Pause public music when entering private zone
-    if (publicAudio) publicAudio.pause();
+    // Ensure public music is stopped (should be faded already)
+    if (publicAudio) {
+      publicAudio.pause();
+      publicAudio.volume = 0;
+    }
 
     // Bind close button
     const closeBtn = document.getElementById("private-close-btn");
@@ -563,7 +597,7 @@
 
     // Resume public music when returning to party
     if (publicAudio && publicAudioStarted) {
-      publicAudio.play().catch(e => console.log("Could not resume public audio", e));
+      fadeAudio(publicAudio, 0.06, 2000); // Smooth fade in
     }
   }
 
