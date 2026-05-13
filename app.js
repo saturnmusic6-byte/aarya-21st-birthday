@@ -422,6 +422,9 @@
       wrap.appendChild(img);
     }
 
+    // Add watermark to lightbox too
+    wrap.insertAdjacentHTML("beforeend", `<div class="gallery-watermark">✦ Aarya's 21st</div>`);
+
     const counter = document.getElementById("lightbox-counter");
     if (counter) counter.textContent = `${lightboxIndex + 1} / ${lightboxItems.length}`;
   }
@@ -599,162 +602,6 @@
   }
 
   /* ═══════════════════════════════════════════════
-     STAR MAP
-  ═══════════════════════════════════════════════ */
-  function openStarMap() {
-    const modal = document.getElementById('starmap-modal');
-    if (!modal) return;
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    const canvas = document.getElementById('starmap-canvas');
-    if (canvas && !canvas.dataset.rendered) {
-      canvas.dataset.rendered = '1';
-      setTimeout(() => renderStarMap(canvas), 50);
-    }
-  }
-
-  function closeStarMap() {
-    const modal = document.getElementById('starmap-modal');
-    if (!modal) return;
-    modal.style.display = 'none';
-    document.body.style.overflow = '';
-  }
-
-  function renderStarMap(canvas) {
-    const W = Math.min(canvas.parentElement.offsetWidth, 820) * window.devicePixelRatio || 820;
-    const H = Math.round(W * 0.6);
-    canvas.width = W;
-    canvas.height = H;
-    const ctx = canvas.getContext('2d');
-
-    // Sky gradient
-    const sky = ctx.createRadialGradient(W*.5,H*.3,0, W*.5,H*.6,W*.9);
-    sky.addColorStop(0, '#0d1b3e');
-    sky.addColorStop(0.5, '#070e1e');
-    sky.addColorStop(1, '#020508');
-    ctx.fillStyle = sky;
-    ctx.fillRect(0,0,W,H);
-
-    // Milky way haze
-    const mw = ctx.createLinearGradient(0,H*.2,W,H*.8);
-    mw.addColorStop(0,'rgba(80,100,170,0)');
-    mw.addColorStop(.35,'rgba(90,110,180,0.06)');
-    mw.addColorStop(.5,'rgba(110,130,200,0.09)');
-    mw.addColorStop(.65,'rgba(90,110,180,0.06)');
-    mw.addColorStop(1,'rgba(80,100,170,0)');
-    ctx.fillStyle = mw;
-    ctx.fillRect(0,0,W,H);
-
-    // Random background stars
-    const rng = () => { let s=0; for(let i=0;i<6;i++) s+=Math.random(); return s/6; };
-    for (let i=0; i<320; i++) {
-      const x=Math.random()*W, y=Math.random()*H;
-      const r=Math.random()*0.9+0.15;
-      const b=rng()*0.55+0.08;
-      ctx.beginPath();
-      ctx.arc(x,y,r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(${200+Math.floor(Math.random()*55)},${210+Math.floor(Math.random()*45)},255,${b})`;
-      ctx.fill();
-    }
-
-    // Constellation data (normalized 0-1 coords)
-    const cons = [
-      { name:'Ursa Major', col:[190,210,245],
-        stars:[
-          {x:.12,y:.13,r:1.6,n:'Dubhe'},{x:.17,y:.20,r:1.4,n:'Merak'},
-          {x:.24,y:.21,r:1.2},{x:.25,y:.13,r:1.0},
-          {x:.32,y:.10,r:1.5,n:'Alioth'},{x:.39,y:.08,r:1.4,n:'Mizar'},
-          {x:.45,y:.12,r:1.6,n:'Alkaid'}
-        ],
-        lines:[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6]]
-      },
-      { name:'Leo', col:[240,220,170],
-        stars:[
-          {x:.49,y:.30,r:2.8,n:'Regulus',glow:true},{x:.44,y:.20,r:1.2},
-          {x:.42,y:.25,r:1.0},{x:.51,y:.21,r:1.4,n:'Algieba'},
-          {x:.57,y:.22,r:1.2},{x:.63,y:.28,r:1.6,n:'Denebola'},{x:.57,y:.31,r:1.0}
-        ],
-        lines:[[0,2],[2,1],[1,3],[3,4],[4,5],[5,6],[6,0]]
-      },
-      { name:'Boötes', col:[255,200,140],
-        stars:[
-          {x:.72,y:.36,r:3.2,n:'Arcturus',glow:true},{x:.70,y:.20,r:1.3,n:'Nekkar'},
-          {x:.77,y:.26,r:1.2,n:'Izar'},{x:.70,y:.41,r:1.1},
-          {x:.64,y:.22,r:1.0,n:'Seginus'},{x:.78,y:.33,r:1.0}
-        ],
-        lines:[[0,1],[0,2],[0,3],[1,4],[2,5],[5,0]]
-      },
-      { name:'Virgo', col:[200,218,255],
-        stars:[
-          {x:.63,y:.58,r:2.6,n:'Spica',glow:true},{x:.59,y:.44,r:1.2,n:'Porrima'},
-          {x:.57,y:.36,r:1.1,n:'Vindemiatrix'},{x:.67,y:.52,r:1.0},{x:.52,y:.47,r:1.0}
-        ],
-        lines:[[0,1],[1,2],[1,3],[1,4]]
-      },
-      { name:'Scorpius', col:[255,175,155],
-        stars:[
-          {x:.86,y:.60,r:2.8,n:'Antares',glow:true},{x:.80,y:.54,r:1.2},
-          {x:.82,y:.57,r:1.0},{x:.88,y:.68,r:1.1},{x:.91,y:.74,r:1.3,n:'Shaula'},{x:.89,y:.72,r:1.0}
-        ],
-        lines:[[1,2],[2,0],[0,3],[3,5],[5,4]]
-      }
-    ];
-
-    // Draw constellation lines
-    cons.forEach(con => {
-      const [r,g,b] = con.col;
-      ctx.save();
-      ctx.strokeStyle = `rgba(${r},${g},${b},0.18)`;
-      ctx.lineWidth = W > 600 ? 0.7 : 0.5;
-      ctx.setLineDash([4,7]);
-      con.lines.forEach(([a,bIdx]) => {
-        const sA = con.stars[a], sB = con.stars[bIdx];
-        ctx.beginPath();
-        ctx.moveTo(sA.x*W, sA.y*H);
-        ctx.lineTo(sB.x*W, sB.y*H);
-        ctx.stroke();
-      });
-      ctx.restore();
-    });
-
-    // Draw stars
-    cons.forEach(con => {
-      const [r,g,b] = con.col;
-      con.stars.forEach(star => {
-        const sx=star.x*W, sy=star.y*H, sr=star.r*(W/820);
-        if (star.glow) {
-          const gl = ctx.createRadialGradient(sx,sy,0,sx,sy,sr*10);
-          gl.addColorStop(0,`rgba(${r},${g},${b},0.45)`);
-          gl.addColorStop(1,`rgba(${r},${g},${b},0)`);
-          ctx.fillStyle=gl;
-          ctx.beginPath(); ctx.arc(sx,sy,sr*10,0,Math.PI*2); ctx.fill();
-        }
-        ctx.beginPath();
-        ctx.arc(sx,sy,sr,0,Math.PI*2);
-        ctx.fillStyle = `rgba(${r},${g},${b},${star.glow?1:0.85})`;
-        ctx.fill();
-        if (star.n) {
-          ctx.fillStyle = `rgba(${r},${g},${b},0.38)`;
-          ctx.font = `${W>500?10:8}px Jost,sans-serif`;
-          ctx.fillText(star.n, sx+sr+4, sy+4);
-        }
-      });
-      // Constellation label
-      const first = con.stars[0];
-      ctx.fillStyle = `rgba(${con.col[0]},${con.col[1]},${con.col[2]},0.28)`;
-      ctx.font = `italic ${W>500?9:7}px 'Cormorant Garamond',serif`;
-      ctx.fillText(con.name, first.x*W, first.y*H - 12*(W/820));
-    });
-
-    // Horizon glow at bottom
-    const horiz = ctx.createLinearGradient(0,H*.72,0,H);
-    horiz.addColorStop(0,'rgba(50,80,160,0)');
-    horiz.addColorStop(1,'rgba(20,40,100,0.18)');
-    ctx.fillStyle=horiz;
-    ctx.fillRect(0,0,W,H);
-  }
-
-  /* ═══════════════════════════════════════════════
      PETALS
   ═══════════════════════════════════════════════ */
   function spawnPetals() {
@@ -918,24 +765,6 @@
     document.querySelectorAll(".mobile-link").forEach((a) => {
       a.addEventListener("click", () => mobileMenu?.classList.remove("open"));
     });
-
-    /* Star map */
-    const navStar = document.getElementById('nav-starmap-btn');
-    const mobileStar = document.getElementById('mobile-starmap-btn');
-    const starmapClose = document.getElementById('starmap-close');
-    const starmapModal = document.getElementById('starmap-modal');
-    if (navStar) navStar.addEventListener('click', openStarMap);
-    if (mobileStar) mobileStar.addEventListener('click', () => {
-      mobileMenu?.classList.remove('open');
-      openStarMap();
-    });
-    if (starmapClose) starmapClose.addEventListener('click', closeStarMap);
-    if (starmapModal) starmapModal.addEventListener('click', e => { if (e.target === starmapModal) closeStarMap(); });
-
-    /* Escape closes star map too */
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && starmapModal && starmapModal.style.display !== 'none') closeStarMap();
-    }, true);
   }
 
   /* ═══════════════════════════════════════════════
