@@ -126,6 +126,13 @@
   privateAudio.volume = 0.5;
   privateAudio.preload = "auto";
 
+  const PUBLIC_AUDIO_URL = "https://res.cloudinary.com/dwoau4g1j/video/upload/v1778701931/ykmejlu0f2rwvjerc5ci.mp3";
+  let publicAudio = new Audio(PUBLIC_AUDIO_URL);
+  publicAudio.loop = true;
+  publicAudio.volume = 0.15; // Really minimal as requested
+  publicAudio.preload = "auto";
+  let publicAudioStarted = false;
+
   /* ═══════════════════════════════════════════════
      INIT FIREBASE
   ═══════════════════════════════════════════════ */
@@ -511,6 +518,9 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
     sessionStorage.setItem("private_unlocked", "1");
 
+    // Pause public music when entering private zone
+    if (publicAudio) publicAudio.pause();
+
     // Bind close button
     const closeBtn = document.getElementById("private-close-btn");
     if (closeBtn) closeBtn.addEventListener("click", lockPrivateZone);
@@ -548,6 +558,11 @@
     if (privateAudio) {
       privateAudio.pause();
       privateAudio.currentTime = 0;
+    }
+
+    // Resume public music when returning to party
+    if (publicAudio && publicAudioStarted) {
+      publicAudio.play().catch(e => console.log("Could not resume public audio", e));
     }
   }
 
@@ -799,6 +814,21 @@
     // Restore session if already unlocked
     if (sessionStorage.getItem("private_unlocked") === "1") {
       unlockPrivateZone();
+    } else {
+      // Background music for main page — starts on first interaction
+      const startPublicMusic = () => {
+        if (publicAudioStarted || sessionStorage.getItem("private_unlocked") === "1") return;
+        publicAudio.play().then(() => {
+          publicAudioStarted = true;
+          console.log("Main page music started");
+        }).catch(err => console.log("Audio play blocked", err));
+        
+        // Remove listeners after first success
+        window.removeEventListener('click', startPublicMusic);
+        window.removeEventListener('touchstart', startPublicMusic);
+      };
+      window.addEventListener('click', startPublicMusic);
+      window.addEventListener('touchstart', startPublicMusic);
     }
   });
 })();
