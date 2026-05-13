@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=4.5" />
+  <link rel="stylesheet" href="style.css?v=5.0" />
   <link rel="manifest" href="manifest.json" />
 </head>
 <body>
@@ -22,6 +22,7 @@
     <div class="nav-links">
       <a href="#gallery-section">Gallery</a>
       <a href="#upload-section">Add Memory</a>
+      <button class="nav-starmap-btn" id="nav-starmap-btn">&#10022; Night Sky</button>
       <button class="nav-private-btn" id="nav-unlock-btn">FOR AARYA <span class="shining-lock">&#128274;</span></button>
     </div>
     <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">&#9776;</button>
@@ -31,6 +32,7 @@
   <div class="mobile-menu" id="mobile-menu">
     <a href="#gallery-section" class="mobile-link">Gallery</a>
     <a href="#upload-section" class="mobile-link">Add Memory</a>
+    <button class="mobile-starmap-btn" id="mobile-starmap-btn">&#10022; Night Sky</button>
     <button class="mobile-private-btn" id="mobile-unlock-btn">FOR AARYA <span class="shining-lock">&#128274;</span></button>
   </div>
 
@@ -156,6 +158,26 @@
   <!-- ===================== PRIVATE ZONE (injected after unlock) ===================== -->
   <div id="private-zone" style="display:none" aria-hidden="true"></div>
 
+  <!-- ===================== STAR MAP MODAL ===================== -->
+  <div class="starmap-overlay" id="starmap-modal" style="display:none" role="dialog" aria-modal="true" aria-label="Night Sky Star Map">
+    <button class="starmap-close" id="starmap-close" aria-label="Close">&#10005;</button>
+    <div class="starmap-header">
+      <p class="starmap-tag">&#10022; The Night Sky</p>
+      <h2 class="starmap-title">The Stars the Night You Turned 21</h2>
+      <p class="starmap-sub">Mumbai, India &nbsp;&middot;&nbsp; May 17th, 2026 &nbsp;&middot;&nbsp; 11:59 PM IST</p>
+    </div>
+    <div class="starmap-canvas-wrap">
+      <canvas id="starmap-canvas"></canvas>
+    </div>
+    <p class="starmap-footer">These constellations watched over you on the night the world gained another year of you &#9825;</p>
+  </div>
+
+  <!-- ===================== AGE COUNTER PILL ===================== -->
+  <div class="age-counter-pill" id="age-counter-pill">
+    <span class="age-counter-label">you've been 21 for</span>
+    <span class="age-counter-time" id="age-counter-time">—</span>
+  </div>
+
   <!-- ===================== LIGHTBOX ===================== -->
   <div class="lightbox" id="lightbox" style="display:none" role="dialog" aria-modal="true">
     <button class="lightbox-close" id="lightbox-close" aria-label="Close">&#10005;</button>
@@ -177,7 +199,7 @@
 
   <!-- App Scripts -->
   <script src="firebase-config.js"></script>
-  <script src="app.js?v=4.5"></script>
+  <script src="app.js?v=5.0"></script>
 
 </body>
 </html>
