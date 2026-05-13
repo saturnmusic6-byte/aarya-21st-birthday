@@ -347,7 +347,9 @@
       <button class="gallery-item-delete" data-id="${item.id}" aria-label="Delete Image" title="Delete image">✕</button>
       <div class="gallery-watermark">✦ Aarya's 21st</div>`);
 
-    el.addEventListener("click", () => openLightbox(idx));
+    const thumbImg = el.querySelector('img');
+    const thumbUrl = thumbImg ? thumbImg.src : '';
+    el.addEventListener("click", () => openLightbox(idx, thumbUrl));
 
     const deleteBtn = el.querySelector(".gallery-item-delete");
     if (deleteBtn) {
@@ -388,36 +390,52 @@
   /* ═══════════════════════════════════════════════
      LIGHTBOX
   ═══════════════════════════════════════════════ */
-  function openLightbox(idx) {
+  function openLightbox(idx, thumbUrl) {
     lightboxIndex = idx;
     const lb = document.getElementById("lightbox");
     lb.style.display = "flex";
     document.body.style.overflow = "hidden";
-    renderLightboxMedia();
+    renderLightboxMedia(thumbUrl);
   }
 
-  function renderLightboxMedia() {
+  function renderLightboxMedia(thumbUrl) {
     const item = lightboxItems[lightboxIndex];
     if (!item) return;
     const wrap = document.getElementById("lightbox-media");
     wrap.innerHTML = "";
 
+    // If we have a thumbnail from the grid, use it as an immediate placeholder
     if (item.type === "video") {
       const vid = document.createElement("video");
-      // Use Cloudinary's f_auto transformation to auto-convert to browser-compatible format
-      // This fixes .MOV and other non-web formats from iPhones
       const safeUrl = item.url.replace('/video/upload/', '/video/upload/f_auto,q_auto/');
       vid.src = safeUrl;
       vid.controls = true;
       vid.autoplay = true;
       vid.playsInline = true;
       vid.preload = "auto";
-      // Fallback to original URL if transformation fails
+      
+      // Use the thumbnail as the video poster so it shows instantly
+      if (thumbUrl) vid.poster = thumbUrl;
+      
       vid.onerror = () => { vid.src = item.url; };
       wrap.appendChild(vid);
     } else {
       const img = document.createElement("img");
-      img.src = item.url;
+      
+      // Optimization: Show thumbnail first, then switch to high-res
+      if (thumbUrl) {
+        img.src = thumbUrl;
+        img.style.filter = "blur(4px)"; // Slight blur for thumbnail
+        const fullImg = new Image();
+        fullImg.src = item.url;
+        fullImg.onload = () => {
+          img.src = item.url;
+          img.style.filter = "none";
+        };
+      } else {
+        img.src = item.url;
+      }
+      
       img.alt = item.name || "Memory";
       wrap.appendChild(img);
     }
