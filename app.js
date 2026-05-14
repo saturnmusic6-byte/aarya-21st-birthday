@@ -129,7 +129,7 @@
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
   const BASE_PUBLIC_VOLUME = isMobile ? 0.02 : 0.06;
 
-  const PUBLIC_AUDIO_URL = "https://res.cloudinary.com/dwoau4g1j/video/upload/v1778701931/ykmejlu0f2rwvjerc5ci.mp3";
+  const PUBLIC_AUDIO_URL = "https://res.cloudinary.com/dwoau4g1j/video/upload/v1778778168/qg3ljcjcpawotw0jptwd.mp3";
   let publicAudio = new Audio(PUBLIC_AUDIO_URL);
   publicAudio.loop = true;
   publicAudio.volume = BASE_PUBLIC_VOLUME;
